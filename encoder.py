@@ -6,7 +6,7 @@ letters = 'abcdefghijklmnopqrstuvwxyz'
 
 # Defining the function that will convert our text into cipher
 
-def encrypt(plaintext, key):
+def encode(plaintext, key):
     ciphertext = ''
     for letter in plaintext:
         letter = letter.lower()
@@ -23,18 +23,18 @@ def encrypt(plaintext, key):
             if index == -1:
                 ciphertext += letter
 
-            # Finally, making sure the letters respawn as 'newindex' reaches the end of the line:
+            # Finally, making sure the letters respawn as 'indeX' reaches the end of the line:
 
             else:
-                newindex = index + key
-                if newindex >= 26:
-                    newindex -= 26
-                ciphertext += letters[newindex]
+                indeX = index + key
+                if indeX >= 26:
+                    indeX -= 26
+                ciphertext += letters[indeX]
     return ciphertext
 
 # Defining the function that will convert our cipher into text
 
-def decrypt(ciphertext, key):
+def decode(ciphertext, key):
     plaintext = ''
     for letter in ciphertext:
         letter = letter.lower()
@@ -45,16 +45,16 @@ def decrypt(ciphertext, key):
             if index == -1:
                 plaintext += letter
             else:
-                newindex = index - key
-                if newindex < 0:
-                    newindex += 26
-                plaintext += letters[newindex]
+                indeX = index - key
+                if indeX < 0:
+                    indeX += 26
+                plaintext += letters[indeX]
     return plaintext
 
 # Making the program interact with the user
 
 print()
-print("choose 'e' for encryption or 'd' for decryption")
+print("choose 'e' for encoding or 'd' for decoding")
 userinput = input('e/d: ').lower()
 print()
     
@@ -63,13 +63,13 @@ if userinput == 'e':
     # When executing the program, you'll have to specify an integer argument from 1-26
 
     key = int(sys.argv[1])
-    text = input('enter the text to encrypt: ')
+    text = input('enter the text to encode: ')
     ciphertext = encrypt(text, key)
     print(f'ciphertext: {ciphertext}')
 
 elif userinput == 'd':
     key = int(sys.argv[1])
-    text = input('enter the text to decrypt: ')
+    text = input('enter the text to decode: ')
     plaintext = decrypt(text, key)
     print(f'plaintext: {plaintext}')
 
