@@ -50,4 +50,3 @@ elif choice.lower() == 'd':
 #Raising an error if the specified values are not 'e' or 'd'
 else:
     raise ValueError("Please choose 'e' for encoding or 'd' for decoding!")
-
