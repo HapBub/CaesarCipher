@@ -6,8 +6,8 @@ shift = int(sys.argv[1])
 #Defining the Caesar Cipher encoding program
 def Encoder(plaintext, shift):
     if shift % 128 == 0 or shift == 0:
-        #Raising an error to avoid a program bug when the end of ascii range is reached
-        raise ValueError("Shift value cannot be 0 or divisible by 128!")
+        #Printing a warning as no encoding occurs when the end of ascii range is reached
+        print("Warning: shift value shouldn't be 0 or divisible by 128!")
 
     ciphertext = ""
 
@@ -21,7 +21,7 @@ def Encoder(plaintext, shift):
 def Decoder(ciphertext, shift):
     if shift % 128 == 0 or shift == 0:
         #Same concept here, if the shift is 128*n (where n is an integer) no shift accurs
-        raise ValueError("Shift value cannot be 0 or divisible by 128!")
+        print("Warning: shift value should not be 0 or divisible by 128!")
 
     plaintext = ""
 
