@@ -1,52 +1,35 @@
 import sys
 
-
-shift = int(sys.argv[1])
-
-#Defining the Caesar Cipher encoding program
-def Encoder(plaintext, shift):
-    if shift % 128 == 0 or shift == 0:
-        #Printing a warning as no encoding occurs when the end of ascii range is reached
-        print("Warning: shift value shouldn't be 0 or divisible by 128!")
-
-    ciphertext = ""
-
-    for char in plaintext:
-        charencoded = chr((ord(char) + shift) % 128)
-        ciphertext += charencoded
-
-    return ciphertext
-
-#Defining the Caesar Cipher decoding program
-def Decoder(ciphertext, shift):
-    if shift % 128 == 0 or shift == 0:
-        #Same concept here, if the shift is 128*n (where n is an integer) no shift accurs
-        print("Warning: shift value should not be 0 or divisible by 128!")
-
-    plaintext = ""
-
-    for char in ciphertext:
-        chardecoded = chr((ord(char) - shift) % 128)
-        plaintext += chardecoded
-
-    return plaintext
+START, SIZE = 32, 95  # printable ASCII: space (32) to ~ (126)
 
 
-#Choosing to encode or decode
-choice = input("Enter 'e' to encode or 'd' to decode: ")
+def shift_text(text, shift):
+    result = ""
+    for char in text:
+        code = ord(char)
+        if START <= code < START + SIZE:
+            code = (code - START + shift) % SIZE + START
+        result += chr(code)  # anything else is left unchanged
+    return result
 
-if choice.lower() == 'e':
-    plaintext = input("Text to encode: ")
 
-    ciphertext = Encoder(plaintext, shift)
-    print("Ciphertext:", ciphertext)
+def main():
+    try:
+        shift = int(sys.argv[1])
+    except (IndexError, ValueError):
+        sys.exit("Usage: python3 caesar.py <integer shift>")
 
-elif choice.lower() == 'd':
-    ciphertext = input("Text to decode: ")
+    if shift % SIZE == 0:
+        print(f"Warning: a shift divisible by {SIZE} changes nothing!")
 
-    plaintext = Decoder(ciphertext, shift)
-    print("Plaintext:", plaintext)
+    choice = input("Enter 'e' to encode or 'd' to decode: ").lower()
+    if choice == "e":
+        print("Ciphertext:", shift_text(input("Text to encode: "), shift))
+    elif choice == "d":
+        print("Plaintext:", shift_text(input("Text to decode: "), -shift))
+    else:
+        sys.exit("Please choose 'e' for encoding or 'd' for decoding!")
 
-#Raising an error if the specified values are not 'e' or 'd'
-else:
-    raise ValueError("Please choose 'e' for encoding or 'd' for decoding!")
+
+if __name__ == "__main__":
+    main()
